@@ -1,4 +1,5 @@
 ﻿using DashboardJob.Services.Interfaces;
+using MyJobDashboard.Models;
 
 namespace DashboardJob.Services
 {
@@ -23,7 +24,7 @@ namespace DashboardJob.Services
         /// Call to FranceTravail to get an access token to their Apis
         /// </summary>
         /// <returns></returns>
-        public async Task<string> GetAccessTokenAsync()
+        public async Task<AccessToken?> GetAccessTokenAsync()
         {
             var client = new HttpClient();
             var content = new FormUrlEncodedContent(new[]
@@ -37,12 +38,13 @@ namespace DashboardJob.Services
             try
             {
                 var response = await client.PostAsync(FranceTravailUri, content);
-                return await response.Content.ReadAsStringAsync();
+
+                return await response.Content.ReadFromJsonAsync<AccessToken>() ?? null;
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
-                return "GetAccessToken Failed";
+                Console.WriteLine("GetAccessTokenAsync Failed", ex);
+                return null;
             }
         }
     }

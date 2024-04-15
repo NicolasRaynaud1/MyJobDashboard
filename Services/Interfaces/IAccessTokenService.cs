@@ -1,7 +1,9 @@
-﻿namespace DashboardJob.Services.Interfaces
+﻿using MyJobDashboard.Models;
+
+namespace DashboardJob.Services.Interfaces
 {
     public interface IAccessTokenService
     {
-        Task<string> GetAccessTokenAsync();
+        Task<AccessToken?> GetAccessTokenAsync();
     }
 }
