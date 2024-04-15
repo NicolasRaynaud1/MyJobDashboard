@@ -2,8 +2,6 @@ using DashboardJob.Services;
 using DashboardJob.Services.Interfaces;
 using MyJobDashboard.Components;
 using MyJobDashboard.Models;
-using MyJobDashboard.Services;
-using MyJobDashboard.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +14,6 @@ builder.Services.AddMemoryCache();
 
 //Services
 builder.Services.AddScoped<IAccessTokenService, AccessTokenService>();
-builder.Services.AddScoped<ICacheService, CacheService>();
 
 var app = builder.Build();
 
@@ -33,14 +30,13 @@ using (var serviceScope = app.Services.CreateScope())
 {
     var services = serviceScope.ServiceProvider;
     var accessTokenService = services.GetRequiredService<IAccessTokenService>();
-    var cacheService = services.GetRequiredService<ICacheService>();
 
-    AccessToken? token = await accessTokenService.GetAccessTokenAsync();
+    AccessToken? token = await accessTokenService.GenerateAccessTokenAsync();
 
     if (token is not null)
-        cacheService.SetToken(token.TokenString, TimeSpan.FromSeconds(token.Expiration - 300));
+        accessTokenService.SetToken(token.TokenString, TimeSpan.FromSeconds(token.Expiration - 300));
 
-    //var test = cacheService.GetToken();
+    //var test = accessTokenService.GetToken();
 }
 
 app.UseHttpsRedirection();
