@@ -73,7 +73,12 @@ namespace DashboardJob.Services
         /// <returns></returns>
         public string? GetToken()
         {
-            return (string?)(_cache.Get(_tokenKey) ?? null);
+            var token = (string?)(_cache.Get(_tokenKey));
+
+            if (token is null)
+                token = GenerateAccessTokenAsync()?.Result?.TokenString;
+
+            return token;
         }
     }
 }

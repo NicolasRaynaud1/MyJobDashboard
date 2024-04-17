@@ -34,7 +34,7 @@ using (var serviceScope = app.Services.CreateScope())
     AccessToken? token = await accessTokenService.GenerateAccessTokenAsync();
 
     if (token is not null)
-        accessTokenService.SetToken(token.TokenString, TimeSpan.FromSeconds(token.Expiration - 300));
+        accessTokenService.SetToken(token.TokenString, TimeSpan.FromSeconds(token.Expiration - 300)); // initial token lifetime minus 5mins
 
     //var test = accessTokenService.GetToken();
 }
