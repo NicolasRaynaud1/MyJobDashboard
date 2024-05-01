@@ -2,6 +2,10 @@ using DashboardJob.Services;
 using DashboardJob.Services.Interfaces;
 using MyJobDashboard.Components;
 using MyJobDashboard.Models;
+using MyJobDashboard.Repository;
+using MyJobDashboard.Repository.Interfaces;
+using MyJobDashboard.Services;
+using MyJobDashboard.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +18,8 @@ builder.Services.AddMemoryCache();
 
 //Services
 builder.Services.AddScoped<IAccessTokenService, AccessTokenService>();
+builder.Services.AddScoped<IApi_LaBonneBoiteService, Api_LaBonneBoiteService>();
+builder.Services.AddScoped<IApi_LaBonneBoiteRepository, Api_LaBonneBoiteRepository>();
 
 var app = builder.Build();
 
