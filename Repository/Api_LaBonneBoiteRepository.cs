@@ -20,7 +20,7 @@ namespace MyJobDashboard.Repository
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                var response = await client.GetAsync("https://api.francetravail.io/partenaire/labonneboite/v1/company/?departments=31&rome_codes=M1805");
+                var response = await client.GetAsync("https://api.francetravail.io/partenaire/labonneboite/v1/company?commune_id=31555&distance=20&rome_codes=M1805");
                 var responseString = await response.Content.ReadAsStringAsync();
                 return responseString;
             }
